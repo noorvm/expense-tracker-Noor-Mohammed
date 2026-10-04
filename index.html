@@ -5,7 +5,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Expense Tracker</title>
-        <script src="Script.js"></script>
     </head>
     <body>
         <h1>Expense Tracker</h1>
@@ -26,7 +25,7 @@
         <section>
             <button id="btn-add-income">add income</button>
             <button id="btn-add-expense">add expense</button>
-            <div id="modal-hidden" class="hidden">
+            <div id="modal-container" class="modal hidden">
                 <div class="modal-content">
                     <button id="btn-close-modal"> X Close</button><br />
                     <h2 id="modal-heading"> Add Transaction</h2>
@@ -68,5 +67,6 @@
             <h2>Transaction History</h2>
             <ul id="transaction-list"></ul>
         </section>
+        <script src="Script.js"></script>
     </body>
 </html>
