@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Expense Tracker</title>
+        <script src="Script.js"></script>
+    </head>
+    <body>
+        <h1>Expense Tracker</h1>
+        <section>
+            <div>
+                <h2>current balance</h2>
+                <p id="total-balance">0.00</p>
+            </div>
+            <div>
+                <h2>total income</h2>
+                <P id="total-income">0.00</P>
+            </div>
+            <div>
+                <h2>total expense </h2>
+                <p id="total-expense">0.00</p>
+            </div>
+        </section>
+        <section>
+            <button id="btn-add-income">add income</button>
+            <button id="btn-add-expense">add expense</button>
+            <div id="modal-hidden" class="hidden">
+                <div class="modal-content">
+                    <button id="btn-close-modal"> X Close</button><br />
+                    <h2 id="modal-heading"> Add Transaction</h2>
+                    <form id="transaction-form">
+                        <input 
+                            type="hidden" 
+                            id="edit-id"
+                            value=""
+                        />
+                        <input 
+                            type="hidden"
+                            id="transaction-type"
+                            value="expense"
+                        />
+                        <input 
+                            type="text"
+                            id="description"
+                            placeholder="enter the purpose"
+                        />
+                        <input 
+                            type="number"
+                            id="amount"
+                            step="0.01"
+                            min="0.01"
+                        />
+                        <input 
+                            type="date"
+                            id="date"
+                        />
+                        <select id="category">
+                            <option></option>
+                        </select>
+                        <button type="submit" id="submit-btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Transaction History</h2>
+            <ul id="transaction-list"></ul>
+        </section>
+    </body>
+</html>
