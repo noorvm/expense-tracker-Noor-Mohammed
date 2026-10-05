@@ -208,3 +208,70 @@ window.editTransaction = function(id) {
 };
 
 initApp();
+
+// Analysis Modal DOM Elements
+const analysisBtn = document.getElementById('analysis-btn');
+const analysisModal = document.getElementById('analysis-modal-container');
+const btnCloseAnalysis = document.getElementById('btn-close-analysis');
+const monthlyListEl = document.getElementById('monthly-list');
+
+// Function to calculate and render monthly expense summary
+function renderMonthlySummary() {
+  const monthlyTotals = {};
+
+  // Group expenses by YYYY-MM
+  transaction
+    .filter(item => item.type === 'expense')
+    .forEach(item => {
+      const monthKey = item.date.slice(0, 7); // e.g. "2026-10"
+      monthlyTotals[monthKey] = (monthlyTotals[monthKey] || 0) + item.amount;
+    });
+
+  const sortedMonths = Object.keys(monthlyTotals).sort().reverse();
+  monthlyListEl.innerHTML = '';
+
+  if (sortedMonths.length === 0) {
+    monthlyListEl.innerHTML = '<li style="color: #64748b; text-align: center;">No expense history available.</li>';
+    return;
+  }
+
+  sortedMonths.forEach(monthKey => {
+    const [year, month] = monthKey.split('-');
+    // Convert to readable month name (e.g., "October 2026")
+    const dateObj = new Date(year, month - 1);
+    const monthName = dateObj.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+    const li = document.createElement('li');
+    li.style.display = 'flex';
+    li.style.justifyContent = 'space-between';
+    li.style.padding = '8px 12px';
+    li.style.background = '#f8fafc';
+    li.style.borderRadius = '6px';
+    li.style.border = '1px solid #e2e8f0';
+
+    li.innerHTML = `
+      <span style="font-weight: 500;">${monthName}</span>
+      <span style="font-weight: 700; color: #ef4444;">-₹${monthlyTotals[monthKey].toFixed(2)}</span>
+    `;
+
+    monthlyListEl.appendChild(li);
+  });
+}
+
+// Open Analysis Modal
+analysisBtn.addEventListener('click', () => {
+  renderMonthlySummary();
+  analysisModal.classList.remove('hidden');
+});
+
+// Close Analysis Modal
+btnCloseAnalysis.addEventListener('click', () => {
+  analysisModal.classList.add('hidden');
+});
+
+// Close when clicking outside on the backdrop
+window.addEventListener('click', (e) => {
+  if (e.target === analysisModal) {
+    analysisModal.classList.add('hidden');
+  }
+});
