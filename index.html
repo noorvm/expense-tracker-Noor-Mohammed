@@ -79,6 +79,20 @@
             <h2>Transaction History<button id="analysis-btn">Analysis</button></h2>
             <ul id="transaction-list"></ul>
         </section>
+        <!-- Analysis Modal -->
+        <div id="analysis-modal-container" class="modal hidden">
+          <div class="modal-content">
+            <button type="button" id="btn-close-analysis">✕ Close</button>
+            <h2>Monthly Expense Summary</h2>
+
+            <div id="monthly-summary-container" style="margin-top: 16px;">
+              <ul id="monthly-list" style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+                <!-- Monthly breakdowns will be dynamically injected here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        
         <script src="Script.js"></script>
     </body>
 </html>

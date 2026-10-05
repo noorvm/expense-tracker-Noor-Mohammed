@@ -125,6 +125,7 @@ function renderTransactions() {
         <span style="font-weight: 700; margin-right: 12px;">
           ${sign}₹${item.amount.toFixed(2)}
         </span>
+        <button onclick="editTransaction('${item.id}')" style="background: none; color: #4f46e5; font-size: 0.85rem; padding: 4px;">Edit</button>
         <button onclick="deleteTransaction('${item.id}')" style="background: none; color: #ef4444; font-size: 0.85rem; padding: 4px;">Delete</button>
       </div>
     `;
@@ -133,7 +134,6 @@ function renderTransactions() {
   });
 }
 
-// 4. Handle Form Submit (Add New or Edit)
 transactionForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -184,5 +184,27 @@ function initApp() {
   updateSummary();
   renderTransactions();
 }
+
+// Open Modal in Edit Mode
+window.editTransaction = function(id) {
+  const item = transaction.find(t => t.id === id);
+  if (!item) return;
+
+  // Open modal in the item's mode
+  openModal(item.type);
+
+  // Fill in existing values
+  editIdInput.value = item.id;
+  modalHeading.textContent = 'Edit Transaction';
+  transactionForm.elements['description'].value = item.description;
+  transactionForm.elements['amount'].value = item.amount;
+  transactionForm.elements['date'].value = item.date;
+
+  if (item.type === 'income') {
+    incomeCategory.value = item.category;
+  } else {
+    expenseCategory.value = item.category;
+  }
+};
 
 initApp();
