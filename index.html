@@ -40,21 +40,25 @@
                             id="transaction-type"
                             value="expense"
                         />
+                        <label>Description</label>
                         <input 
                             type="text"
                             id="description"
                             placeholder="enter the purpose"
                         />
+                        <label>Amount</label>
                         <input 
                             type="number"
                             id="amount"
                             step="0.01"
                             min="0.01"
                         />
+                        <label>Date</label>
                         <input 
                             type="date"
                             id="date"
                         />
+                        <label>Category</label>
                         <select id="expense-category" class="hidden">
                             <option value="Food">Food</option>
                             <option value="Transportation">Transportation</option>
@@ -72,7 +76,7 @@
             </div>
         </section>
         <section>
-            <h2>Transaction History</h2>
+            <h2>Transaction History<button id="analysis-btn">Analysis</button></h2>
             <ul id="transaction-list"></ul>
         </section>
         <script src="Script.js"></script>

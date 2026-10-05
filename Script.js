@@ -56,6 +56,10 @@ function closeModal() {
   modalContainer.classList.add('hidden');
 }
 
+function addAmount(){
+  
+}
+
 btnAddIncome.addEventListener('click', () => openModal('income'));
 btnAddExpense.addEventListener('click', () => openModal('expense'));
 btnCloseModal.addEventListener('click', closeModal);
@@ -66,3 +70,119 @@ window.addEventListener('click', (e) => {
     closeModal();
   }
 });
+
+// Grab DOM elements for Summary and History List
+const totalBalanceEl = document.getElementById('total-balance');
+const totalIncomeEl = document.getElementById('total-income');
+const totalExpenseEl = document.getElementById('total-expense');
+const transactionListEl = document.getElementById('transaction-list');
+
+// 1. Save current array to LocalStorage
+function saveToLocalStorage() {
+  localStorage.setItem('transactions', JSON.stringify(transaction));
+}
+
+// 2. Calculate and render Balance, Total Income, and Total Expense
+function updateSummary() {
+  let income = 0;
+  let expense = 0;
+
+  transaction.forEach(item => {
+    if (item.type === 'income') {
+      income += item.amount;
+    } else {
+      expense += item.amount;
+    }
+  });
+
+  const balance = income - expense;
+
+  totalIncomeEl.textContent = `₹${income.toFixed(2)}`;
+  totalExpenseEl.textContent = `₹${expense.toFixed(2)}`;
+  totalBalanceEl.textContent = `₹${balance.toFixed(2)}`;
+}
+
+// 3. Render the full transaction list onto the screen
+function renderTransactions() {
+  transactionListEl.innerHTML = '';
+
+  if (transaction.length === 0) {
+    transactionListEl.innerHTML = '<p style="color: #64748b; text-align: center; margin-top: 10px;">No transactions added yet.</p>';
+    return;
+  }
+
+  transaction.forEach(item => {
+    const li = document.createElement('li');
+    li.className = `transaction-item ${item.type}`;
+    const sign = item.type === 'income' ? '+' : '-';
+
+    li.innerHTML = `
+      <div>
+        <strong>${item.description}</strong>
+        <p style="font-size: 0.8rem; color: #64748b;">${item.category} • ${item.date}</p>
+      </div>
+      <div>
+        <span style="font-weight: 700; margin-right: 12px;">
+          ${sign}₹${item.amount.toFixed(2)}
+        </span>
+        <button onclick="deleteTransaction('${item.id}')" style="background: none; color: #ef4444; font-size: 0.85rem; padding: 4px;">Delete</button>
+      </div>
+    `;
+
+    transactionListEl.appendChild(li);
+  });
+}
+
+// 4. Handle Form Submit (Add New or Edit)
+transactionForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const category = transactionTypeInput.value === 'income' 
+    ? incomeCategory.value 
+    : expenseCategory.value;
+
+  const itemData = {
+    id: editIdInput.value ? editIdInput.value : Date.now().toString(),
+    type: transactionTypeInput.value,
+    description: document.getElementById('description').value.trim(),
+    amount: parseFloat(document.getElementById('amount').value),
+    date: dateInput.value,
+    category: category
+  };
+
+  if (editIdInput.value) {
+    // If editing existing item
+    const index = transaction.findIndex(t => t.id === editIdInput.value);
+    if (index !== -1) {
+      transaction[index] = itemData;
+    }
+  } else {
+    // If adding a new item, add to the front
+    transaction.unshift(itemData);
+  }
+
+  saveToLocalStorage();
+  updateSummary();
+  renderTransactions();
+  closeModal();
+});
+
+// 5. Delete Transaction Handler
+window.deleteTransaction = function(id) {
+  transaction = transaction.filter(item => item.id !== id);
+  saveToLocalStorage();
+  updateSummary();
+  renderTransactions();
+};
+
+// 6. Initialize App on Page Load (Load from LocalStorage)
+function initApp() {
+  const storedData = localStorage.getItem('transactions');
+  if (storedData) {
+    transaction = JSON.parse(storedData);
+  }
+  updateSummary();
+  renderTransactions();
+}
+
+initApp();
