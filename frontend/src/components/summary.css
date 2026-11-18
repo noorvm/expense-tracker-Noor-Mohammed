@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background-color: #f1f5f9; /* Soft light gray */
+  color: #1e293b;            /* Dark readable slate text */
+  padding: 24px 16px;
+  max-width: 800px;
+  margin: 0 auto;            /* Centers the entire page on desktop */
+}
+
+/* Card Container */
+section:first-of-type {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Individual Card */
+section:first-of-type > div {
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+section:first-of-type h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+section:first-of-type p {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+
+#total-income {
+  color: #10b981; /* Green */
+}
+
+#total-expense {
+  color: #ef4444; /* Red */
+}
