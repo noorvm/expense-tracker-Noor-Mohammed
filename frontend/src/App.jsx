@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react'
+import Summary from './components/Summary'
 import './App.css'
 
 function App() {
@@ -146,7 +147,7 @@ function App() {
       {/* Summary Section */}
 
       <section>
-        <div>
+        {/* <div>
           <h2>Current Balance</h2>
           <p id="total-balance">₹{balance.toFixed(2)}</p>
         </div>
@@ -159,17 +160,18 @@ function App() {
         <div>
           <h2>Total Expense</h2>
           <p id="total-expense">₹{expense.toFixed(2)}</p>
-        </div>
+        </div> */}
+        <Summary  balance = {balance} income={income} expense={expense} />
       </section>
 
       {/* Add Transaction Buttons */}
 
       <section>
-        <button onClick={() => openModal('income')}>
+        <button id='btn-add-income'  onClick={() => openModal('income')}>
           Add Income
         </button>
 
-        <button onClick={() => openModal('expense')}>
+        <button id="btn-add-expense" onClick={() => openModal('expense')}>
           Add Expense
         </button>
 

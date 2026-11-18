@@ -7,3 +7,4 @@ app = FastAPI()
 def home():
     print("Succesfully connected Fatsapi")
     return {"message":"Succesfully connected"}
+
